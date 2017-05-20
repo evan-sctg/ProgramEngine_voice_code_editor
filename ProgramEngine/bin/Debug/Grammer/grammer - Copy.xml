@@ -1,0 +1,1364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grammar xml:lang="en-US" root="def" 
+tag-format="semantics/1.0" version="1.0" 
+xmlns="http://www.w3.org/2001/06/grammar"
+xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions">
+
+
+<rule id="def"> 
+   
+   <item repeat="1">
+<one-of>
+   <item> <ruleref uri="#actionDefineSHORTS"/> <tag> out=rules.actionDefineSHORTS; </tag></item>
+   <item> <ruleref uri="#actionDefineXML"/> <tag> out=rules.actionDefineXML; </tag></item>
+   <item> <ruleref uri="#actionPreDefined_CS"/> <tag> out=rules.actionPreDefined_CS; </tag></item>
+   <item> <ruleref uri="#actionPreDefined_php"/> <tag> out=rules.actionPreDefined_php; </tag></item>
+   <item> <ruleref uri="#actionDefineCS"/> <tag> out=rules.actionDefineCS; </tag></item>
+   <item> <ruleref uri="#actionDefine"/> <tag> out=rules.actionDefine; </tag></item>
+   <item> <ruleref uri="#actionCallCSObj"/> <tag> out=rules.actionCallCSObj; </tag></item>
+   <item> <ruleref uri="#actionCallCS"/> <tag> out=rules.actionCallCS; </tag></item>
+   <item> <ruleref uri="#actionCall"/> <tag> out=rules.actionCall; </tag></item>
+   <item> <ruleref uri="#actionDictate"/> <tag> out=rules.actionDictate; </tag></item>
+   <item> <ruleref uri="#actionDictateWord"/> <tag> out=rules.actionDictateWord; </tag></item>
+   <item> <ruleref uri="#actionNavigate"/> <tag> out=rules.actionNavigate; </tag></item>
+   <item> <ruleref uri="#actionNavigateToLine"/> <tag> out=rules.actionNavigateToLine; </tag></item>
+   <item> <ruleref uri="#actionSelectLines"/> <tag> out=rules.actionSelectLines; </tag></item>
+   <item> <ruleref uri="#actionSelect"/> <tag> out=rules.actionSelect; </tag></item>
+   <item> <ruleref uri="#actionSelectBetween"/> <tag> out=rules.actionSelectBetween; </tag></item>
+   <item> <ruleref uri="#actionSelectEncase"/> <tag> out=rules.actionSelectEncase; </tag></item>
+   <item> <ruleref uri="#actionSelectEditor"/> <tag> out=rules.actionSelectEditor; </tag></item>
+   <item> <ruleref uri="#actionChangeSetting"/> <tag> out=rules.actionChangeSetting; </tag></item>
+ </one-of>
+</item>
+</rule>
+
+
+
+<rule id="actionPreDefined_php"> 
+   
+   <item> native <tag> out.Action="native"; </tag></item>
+     <item> P H P</item>
+    <tag> out.ActionType = "PHP_Function"</tag>
+   
+ <ruleref uri="#PHPLib_func" />
+ <tag> out.Name=rules.PHPLib_func; </tag>
+   
+</rule>
+
+<rule id="actionPreDefined_CS"> 
+   
+   <item> native <tag> out.Action="native"; </tag></item>
+     <item> C Sharp</item>
+    <tag> out.ActionType = "CS_Function"</tag>
+   
+ <ruleref uri="#PHPLib_func" />
+ <tag> out.Name=rules.CSLib_func; </tag>
+   
+</rule>
+
+
+
+
+
+<rule id="actionDefine"> 
+   
+   <item> define <tag> out.Action="define"; </tag></item>
+   
+    <ruleref uri="#deftypes"/>
+    <tag> out.ActionType = rules.deftypes; </tag>
+   
+ <ruleref uri="#wordlib" />
+ <tag> out.Name=rules.wordlib; </tag>
+   
+</rule>
+
+
+
+
+<rule id="actionDefineSHORTS"> 
+   
+   <item> define <tag> out.Action="defineShort"; </tag></item>
+   <item> short </item>
+   
+   
+ <ruleref uri="#shortlib" />
+ <tag> out.Name=rules.shortlib; </tag>
+   
+</rule>
+
+
+<rule id="actionDefineCS"> 
+   
+   <item> define <tag> out.Action="defineCS"; </tag></item>
+   <item> c sharp </item>
+   
+    <ruleref uri="#CSdeftypes"/>
+    <tag> out.ActionType = rules.CSdeftypes; </tag>
+   
+ <ruleref uri="#wordlib" />
+ <tag> out.Name=rules.wordlib; </tag>
+   
+</rule>
+
+
+<rule id="actionDefineXML"> 
+   
+   <item> define <tag> out.Action="defineXML"; </tag></item>
+   <item> xml</item>
+   
+      <item> 
+    <one-of>
+    <item>element<tag> out.ActionType = "element"; </tag></item>
+    <item>self closing element<tag> out.ActionType = "elementSC"; </tag></item>
+        </one-of>
+    </item>
+   
+ <ruleref uri="#wordlib" />
+ <tag> out.Name=rules.wordlib; </tag>
+   
+</rule>
+
+
+
+
+
+
+<rule id="actionCall"> 
+   
+   <item> call <tag> out.Action="call"; </tag></item>
+   
+    <ruleref uri="#deftypes"/>
+    <tag> out.ActionType = rules.deftypes; </tag>
+   
+ <ruleref uri="#wordlib" />
+ <tag> out.Name=rules.wordlib; </tag>
+   
+</rule>
+
+
+<rule id="actionCallCS"> 
+   
+   <item> call <tag> out.Action="callCS"; </tag></item>
+   <item> c sharp </item>
+   
+    <ruleref uri="#deftypes"/>
+    <tag> out.ActionType = rules.deftypes; </tag>
+   
+ <ruleref uri="#wordlib" />
+ <tag> out.Name=rules.wordlib; </tag>
+   
+</rule>
+
+<rule id="actionCallCSObj"> 
+   
+   <item> call <tag> out.Action="callCS"; </tag></item>
+   <item> c sharp object <tag> out.ActionType = "object"; </tag></item>
+   
+    <ruleref uri="#CSobjs"/>
+    <tag> out.Name = rules.CSobjs; </tag>
+   
+</rule>
+
+
+<rule id="actionDictate"> 
+   
+   <item> dictate <tag> out.Action="dictate"; </tag></item>
+      
+  <item repeat="0-1"> charicter <tag> out.ActionType="char"; </tag></item>
+    
+ <ruleref uri="#dictationLib" />
+ <tag> out.Name=rules.dictationLib; </tag>
+   
+</rule>
+
+<rule id="actionDictateWord"> 
+   
+   <item> dictate <tag> out.Action="dictate"; </tag></item>
+      
+  <item> word <tag> out.ActionType="word"; </tag></item>
+    
+ <ruleref uri="#wordlib" />
+ <tag> out.Name=rules.wordlib; </tag>
+   
+</rule>
+
+
+
+
+<rule id="actionNavigateToLine"> 
+   
+   <item> navigate <tag> out.Action="navigate"; </tag></item>
+   
+    <item> line number <tag> out.ActionType = "line number"; </tag></item>
+   
+ <ruleref uri="#numlist" />
+ <tag> out.Name=rules.latest(); </tag>
+   
+</rule>
+
+
+<rule id="actionNavigate"> 
+   
+   <item> navigate <tag> out.Action="navigate"; </tag></item>
+   
+    <ruleref uri="#navlist"/>
+    <tag> out.ActionType = rules.latest(); </tag>
+   
+ <ruleref uri="#repeatCount" />
+ <tag> out.Repeat=rules.latest(); </tag>
+   
+</rule>
+
+
+
+<rule id="actionSelect"> 
+   
+   <item> select <tag> out.Action="select"; </tag></item>
+   
+    <ruleref uri="#navlist"/>
+    <tag> out.ActionType = rules.latest(); </tag>
+   
+ <ruleref uri="#repeatCount" />
+ <tag> out.Repeat=rules.latest(); </tag>
+   
+</rule>
+
+
+
+
+<rule id="actionSelectLines"> 
+   
+   <item> select <tag> out.Action="select"; </tag></item>
+   
+    <item> line number <tag> out.ActionType = "line numbers"; </tag></item>
+   
+ <ruleref uri="#numlist" />
+ <tag> out.Name=rules.latest(); </tag>
+ 
+ 
+    <item> til line number</item>
+   
+ <ruleref uri="#numlist" />
+ <tag> out.Name=out.Name+"-"+rules.latest(); </tag>
+</rule>
+
+
+<rule id="actionSelectBetween"> 
+   
+   <item> select <tag> out.Action="select"; </tag></item>
+   
+      <item> 
+    <one-of>
+      <item> between last <tag> out.ActionType="between last"; </tag></item>
+      <item> between next <tag> out.ActionType="between next"; </tag></item>
+    </one-of>
+    </item>
+   
+ <ruleref uri="#encaselist" />
+ <tag> out.Name=rules.encaselist; </tag>
+   
+</rule>
+
+<rule id="actionSelectEncase"> 
+   
+   <item> select <tag> out.Action="select"; </tag></item>
+   
+    <item> encase <tag> out.ActionType = "encase"; </tag></item>
+   
+ <ruleref uri="#encaselist" />
+ <tag> out.Name=rules.encaselist; </tag>
+   
+</rule>
+
+<rule id="actionSelectEditor"> 
+   
+   <item> select <tag> out.Action="select"; </tag></item>
+   
+    <item> editor <tag> out.ActionType = "editor"; </tag></item>
+   
+</rule>
+
+
+
+<rule id="actionChangeSetting"> 
+   
+   <item> change setting <tag> out.Action="change setting"; </tag></item>
+   
+  <item repeat="0-1"> 
+    <one-of>
+      <item> language <tag> out.ActionType="language"; </tag></item>
+    </one-of>
+    </item>
+   
+
+  <item repeat="0-1"> 
+    <one-of>
+      <item> P H P <tag> out.Name="PHP"; </tag></item>
+      <item> C sharp <tag> out.Name="CS"; </tag></item>
+      <item> C S <tag> out.Name="CS"; </tag></item>
+      <item> H T M L <tag> out.Name="HTML"; </tag></item>
+      <item> java script <tag> out.Name="Javascript"; </tag></item>
+      <item> CSS <tag> out.Name="CSS"; </tag></item>
+    </one-of>
+    </item>
+
+</rule>
+
+
+
+  
+
+
+
+
+	 
+   <rule id="numlist" sapi:dynamic="true">
+   
+      <item repeat="1-10"> 
+    <one-of>
+      <item>1</item>
+      <item>2</item>
+      <item>3</item>
+      <item>4</item>
+      <item>5</item>
+      <item>6</item>
+      <item>7</item>
+      <item>8</item>
+      <item>9</item>
+      <item>0</item>
+    </one-of>
+    </item>
+    </rule>
+
+
+
+	 
+   <rule id="navlist" sapi:dynamic="true">
+   
+      <item repeat="0-1"> 
+    <one-of>
+      <item> to dot case <tag> out.ActionType="to dot"; </tag></item>
+      <item> to dash case <tag> out.ActionType="to dash"; </tag></item>
+      <item> to score case <tag> out.ActionType="to score"; </tag></item>
+      <item> to camel case <tag> out.ActionType="to camel"; </tag></item>
+      <item> to upper <tag> out.ActionType="to upper"; </tag></item>
+      <item> to lower <tag> out.ActionType="to lower"; </tag></item>
+      <item> capitalize <tag> out.ActionType="capitalize"; </tag></item>
+      <item> home <tag> out.ActionType="home"; </tag></item>
+      <item> end <tag> out.ActionType="end"; </tag></item>
+      <item> up <tag> out.ActionType="up"; </tag></item>
+      <item> down <tag> out.ActionType="down"; </tag></item>
+      <item> left <tag> out.ActionType="left"; </tag></item>
+      <item> right <tag> out.ActionType="right"; </tag></item>
+      <item> next word <tag> out.ActionType="next word"; </tag></item>
+      <item> last word <tag> out.ActionType="last word"; </tag></item>
+      
+      <item> right word <tag> out.ActionType="next word"; </tag></item>
+      <item> left word <tag> out.ActionType="last word"; </tag></item>
+      
+      <item> undo <tag> out.ActionType="undo"; </tag></item>
+      <item> redo <tag> out.ActionType="redo"; </tag></item>
+      <item> copy <tag> out.ActionType="copy"; </tag></item>
+      <item> cut <tag> out.ActionType="cut"; </tag></item>
+      <item> paste <tag> out.ActionType="paste"; </tag></item>
+      <item> backspace <tag> out.ActionType="backspace"; </tag></item>
+      <item> delete <tag> out.ActionType="delete"; </tag></item>
+      <item> delete word <tag> out.ActionType="delete word"; </tag></item>
+      <item> delete line <tag> out.ActionType="delete line"; </tag></item>
+      
+      
+      <item> none <tag> out.ActionType="none"; </tag></item>
+      <item> all <tag> out.ActionType="all"; </tag></item>
+      <item> paragraph <tag> out.ActionType="paragraph"; </tag></item>
+      
+      <item> last comma <tag> out.ActionType="last comma"; </tag></item>
+      <item> next comma <tag> out.ActionType="next comma"; </tag></item>
+      
+      <item> last perenthises <tag> out.ActionType="last perenthises"; </tag></item>
+      <item> next perenthises <tag> out.ActionType="next perenthises"; </tag></item>
+      
+      <item> last single quote <tag> out.ActionType="last single quote"; </tag></item>
+      <item> next single quote <tag> out.ActionType="next single quote"; </tag></item>
+      
+      <item> last double quote <tag> out.ActionType="last double quote"; </tag></item>
+      <item> next double quote <tag> out.ActionType="next double quote"; </tag></item>
+      
+      <item> last brace <tag> out.ActionType="last brace"; </tag></item>
+      <item> next brace <tag> out.ActionType="next brace"; </tag></item>
+      
+      <item> last bracket <tag> out.ActionType="last bracket"; </tag></item>
+      <item> next bracket <tag> out.ActionType="next bracket"; </tag></item>
+      
+      <item> last function <tag> out.ActionType="last function"; </tag></item>
+      <item> next function <tag> out.ActionType="next function"; </tag></item>
+      
+      <item> next paragraph <tag> out.ActionType="next paragraph"; </tag></item>
+      <item> last paragraph <tag> out.ActionType="last paragraph"; </tag></item>
+      <item> word <tag> out.ActionType="word"; </tag></item>
+      <item> line <tag> out.ActionType="line"; </tag></item>
+      <item> new line <tag> out.ActionType="new line"; </tag></item>
+      <item> last line <tag> out.ActionType="last line"; </tag></item>
+      <item> next line <tag> out.ActionType="next line"; </tag></item>
+    </one-of>
+    </item>
+    </rule>
+
+
+	 
+   <rule id="PHPLib_func" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+	   <item> switch case <tag> out.Name="case \"\":\n\nbreak;" </tag></item>
+	   <item> if <tag> out.Name="if(){\n\n}" </tag></item>
+	   <item> else<tag> out.Name="else{\n\n}" </tag></item>
+	   <item> else if <tag> out.Name="else if(){\n\n}" </tag></item>
+	   <item> return <tag> out.Name="return $variable;" </tag></item>
+	   <item> switch <tag> out.Name="switch ($variable) {\ncase \"\":\n\nbreak;\n}"; </tag></item>
+	   <item> for each <tag> out.Name="foreach ($array as $value) {\n\n}"; </tag></item>
+	   <item> while <tag> out.Name="while(){\n\n}" </tag></item>
+	<item> for loop <tag> out.Name="for ($x = 0; $x &lt;= 10; $x++) {\n\n}"; </tag></item>
+      <item> new array <tag> out.Name="array()"; </tag></item>
+      <item> echo <tag> out.Name="echo $string"; </tag></item>
+      <item> die <tag> out.Name="die($string)"; </tag></item>
+      <item> print recursive <tag> out.Name="print_r($var)"; </tag></item>
+      <item> print underscore r <tag> out.Name="print_r($var)"; </tag></item>
+      <item> random <tag> out.Name="rand($min , $max)"; </tag></item>
+      <item> strip slashes <tag> out.Name="stripslashes($string)"; </tag></item>
+      <item> add slashes <tag> out.Name="addslashes($string)"; </tag></item>
+      <item> strip tags <tag> out.Name="strip_tags($string)"; </tag></item>
+      <item> H T M L special charicters <tag> out.Name="htmlspecialchars($string)"; </tag></item>
+      <item> H T M L entities <tag> out.Name="htmlentities($string)"; </tag></item>
+      <item> implode <tag> out.Name="implode($delimiter , $array)"; </tag></item>
+      <item> explode <tag> out.Name="explode($delimiter , $string)"; </tag></item>
+      <item> string word count <tag> out.Name="str_word_count($string)"; </tag></item>
+      <item> string reverse <tag> out.Name="strrev($string)"; </tag></item>
+      <item> string position <tag> out.Name="strpos($haystack , $needle)"; </tag></item>
+      <item> string replace <tag> out.Name="str_replace($search ,  $replace , $subject)"; </tag></item>
+      <item> string to upper <tag> out.Name="strtoupper($string)"; </tag></item>
+      <item> string to lower <tag> out.Name="strtolower($string)"; </tag></item>
+      <item> string right trim <tag> out.Name="rtrim($string)"; </tag></item>
+      <item> string left trim <tag> out.Name="ltrim($string)"; </tag></item>
+      <item> string trim <tag> out.Name="trim($string)"; </tag></item>
+      <item> string length <tag> out.Name="strlen($string)"; </tag></item>
+      <item> sub string <tag> out.Name="substr($string , $start)"; </tag></item>
+      <item> array unique <tag> out.Name="array_unique($array)"; </tag></item>
+      <item> array combine <tag> out.Name="array_merge($array1 , $array2)"; </tag></item>
+      <item> array merge <tag> out.Name="array_merge($array1 , $array2)"; </tag></item>
+      <item> array reverse <tag> out.Name="array_reverse($array)"; </tag></item>
+      <item> array pop <tag> out.Name="array_pop($array)"; </tag></item>
+      <item> array push <tag> out.Name="array_push($array, $value)"; </tag></item>
+      <item> array keys <tag> out.Name="array_keys($array)"; </tag></item>
+      <item> array values <tag> out.Name="array_values($array)"; </tag></item>
+      <item> array shift <tag> out.Name="array_shift($array)"; </tag></item>
+      <item> array unshift <tag> out.Name="array_unshift($array , $value)"; </tag></item>
+      <item> array random <tag> out.Name="array_rand($array)"; </tag></item>
+      <item> array search <tag> out.Name="array_search($search , $array)"; </tag></item>
+      <item> array slice <tag> out.Name="array_slice($array , $offset , $length)"; </tag></item>
+      <item> array splice <tag> out.Name="array_splice($array , $offset)"; </tag></item>
+      <item> array key exists <tag> out.Name="array_key_exists($key , $array)"; </tag></item>
+      <item> array difference <tag> out.Name="array_diff($array1 , $array2)"; </tag></item>
+      <item> max <tag> out.Name="max($array)"; </tag></item>
+      <item> min <tag> out.Name="min($array)"; </tag></item>
+      <item> in array <tag> out.Name="in_array($search , $array)"; </tag></item>
+      <item> is array <tag> out.Name="is_array($array)"; </tag></item>
+      <item> is string <tag> out.Name="is_string($string)"; </tag></item>
+      <item> string string <tag> out.Name="strstr($haystack, $needle)"; </tag></item>
+      <item> extract <tag> out.Name="extract($array)"; </tag></item>
+      <item> size of <tag> out.Name="sizeof($array)"; </tag></item>
+      <item> key sort <tag> out.Name="ksort($array)"; </tag></item>
+      <item> sort <tag> out.Name="sort($array)"; </tag></item>
+      <item> sort reverse<tag> out.Name="rsort($array)"; </tag></item>
+      <item> key sort reverse<tag> out.Name="krsort($array)"; </tag></item>
+      <item> count <tag> out.Name="count($array)"; </tag></item>
+      <item> C R C thirty two <tag> out.Name="crc32($string)"; </tag></item>
+      <item> string to time <tag> out.Name="strtotime($string)"; </tag></item>
+      <item> date <tag> out.Name="date($format)"; </tag></item>
+      <item> base 64 encode <tag> out.Name="base64_encode($string)"; </tag></item>
+      <item> base 64 decode <tag> out.Name="base64_decode($string)"; </tag></item>
+      <item> time <tag> out.Name="time()"; </tag></item>
+      <item> file exists <tag> out.Name="file_exists($file)"; </tag></item>
+      <item> file get contents <tag> out.Name="file_get_contents($file)"; </tag></item>
+      <item> file put contents <tag> out.Name="file_put_contents($file,$data)"; </tag></item>
+    </one-of>
+    </item>
+    </rule>
+
+	 
+	 
+   <rule id="CSLib_func" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+	   <item> null <tag> out.Name="null" </tag></item>
+	   <item> serialize field <tag> out.Name="[SerializeField]" </tag></item>
+	   <item> using system <tag> out.Name="using System;" </tag></item>
+	   <item> using system collections <tag> out.Name="using System.Collections;" </tag></item>
+	   <item> using system collections generic <tag> out.Name="using System.Collections.Generic;" </tag></item>
+	   <item> using unity engine <tag> out.Name="using UnityEngine;" </tag></item>
+	   <item> using system I O <tag> out.Name="using System.IO;" </tag></item>
+	   <item> using system link <tag> out.Name="using System.Linq;" </tag></item>
+	   <item> using system globalization <tag> out.Name="using System.Globalization;" </tag></item>
+	   <item> public <tag> out.Name="public" </tag></item>
+	   <item> protected <tag> out.Name="protected" </tag></item>
+	   <item> string <tag> out.Name="string" </tag></item>
+	   <item> list <tag> out.Name="List" </tag></item>
+	   <item> integer <tag> out.Name="int" </tag></item>
+	   <item> int <tag> out.Name="int" </tag></item>
+	   <item> class <tag> out.Name="class" </tag></item>
+	   <item> bool <tag> out.Name="bool" </tag></item>
+	   <item> boolean <tag> out.Name="bool" </tag></item>
+	   <item> void <tag> out.Name="void" </tag></item>
+	   <item> function <tag> out.Name="(){\n\n}" </tag></item>
+	   <item> switch case <tag> out.Name="case \"\":\n\nbreak;" </tag></item>
+	   <item> if <tag> out.Name="if(){\n\n}" </tag></item>
+	   <item> else<tag> out.Name="else{\n\n}" </tag></item>
+	   <item> while <tag> out.Name="while(){\n\n}" </tag></item>
+	   <item> else if <tag> out.Name="else if(){\n\n}" </tag></item>
+	   <item> return <tag> out.Name="return variable;" </tag></item>
+	   <item> switch <tag> out.Name="switch (variable) {\ncase \"\":\n\nbreak;\n}"; </tag></item>
+	   <item> for each <tag> out.Name="foreach (int CurListItem in StoredList) {\n\n}"; </tag></item>
+	<item> for loop <tag> out.Name="for (int x = 0; x &lt;= 10; x++) {\n\n}"; </tag></item>
+         </one-of>
+    </item>
+    </rule>
+
+	 
+   <rule id="shortlib" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+      <item> not equals<tag> out.Name="!="; </tag></item>
+      <item> equals<tag> out.Name="="; </tag></item>
+      <item> equal quote <tag> out.Name="=\"\""; </tag></item>
+      <item> equal double quote <tag> out.Name="=\"\""; </tag></item>
+      <item> equal single quote <tag> out.Name="=''"; </tag></item>
+      <item> bar <tag> out.Name="|"; </tag></item>
+      <item> parens <tag> out.Name="()"; </tag></item>
+      <item> parenthesis <tag> out.Name="()"; </tag></item>
+      <item> brackets <tag> out.Name="[]"; </tag></item>
+      <item> braces <tag> out.Name="{}"; </tag></item>
+      <item> double quotes <tag> out.Name="\"\""; </tag></item>
+      <item> single quotes <tag> out.Name="''"; </tag></item>
+      <item> comma <tag> out.Name=","; </tag></item>
+      <item> semi colon <tag> out.Name=";"; </tag></item>
+      <item> dot <tag> out.Name="."; </tag></item>
+      <item> period <tag> out.Name="."; </tag></item>
+    </one-of>
+    </item>
+    </rule>
+    
+	 
+   <rule id="CSobjs" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+      <item> transform <tag> out.Name=".transform"; </tag></item>
+      <item> game object <tag> out.Name=".gameObject"; </tag></item>
+      <item> name <tag> out.Name=".name"; </tag></item>
+      <item> tag <tag> out.Name=".tag"; </tag></item>
+      <item> root <tag> out.Name=".root"; </tag></item>
+      <item> position <tag> out.Name=".position"; </tag></item>
+      <item> rotation <tag> out.Name=".rotation"; </tag></item>
+      <item> euler angles <tag> out.Name=".eulerAngles"; </tag></item>
+      <item> you ler angles <tag> out.Name=".eulerAngles"; </tag></item>
+      <item> local you ler angles <tag> out.Name=".localEulerAngles"; </tag></item>
+      <item> local euler angles <tag> out.Name=".localEulerAngles"; </tag></item>
+      <item> local rotation <tag> out.Name=".localRotation"; </tag></item>
+      <item> local position <tag> out.Name=".localPosition"; </tag></item>
+      <item> local scale <tag> out.Name=".localScale"; </tag></item>
+      <item> lossy scale <tag> out.Name=".lossyScale"; </tag></item>
+      <item> local to world matrix <tag> out.Name=".localToWorldMatrix"; </tag></item>
+      <item> broadcast message <tag> out.Name=".BroadcastMessage(message)"; </tag></item>
+      <item> send message <tag> out.Name=".SendMessage(message)"; </tag></item>
+      <item> to string <tag> out.Name=".ToString()"; </tag></item>
+      <item> compare tag <tag> out.Name=".CompareTag(tag)"; </tag></item>
+      <item> rotate <tag> out.Name=".Rotate(rotation)"; </tag></item>
+      <item> rotate around<tag> out.Name=".RotateAround(point)"; </tag></item>
+      <item> translate <tag> out.Name=".Translate(position)"; </tag></item>
+      <item> transform vector <tag> out.Name=".TransformVector(position)"; </tag></item>
+      <item> transform point <tag> out.Name=".TransformPoint(position)"; </tag></item>
+      <item> transform direction <tag> out.Name=".TransformDirection(position)"; </tag></item>
+      <item> look at <tag> out.Name=".lookAt(position)"; </tag></item>
+      <item> set parent <tag> out.Name=".SetParent(parent)"; </tag></item>
+      <item> parent <tag> out.Name=".parent"; </tag></item>
+      <item> is child of <tag> out.Name=".IsChildOf(parent)"; </tag></item>
+      <item> find <tag> out.Name=".find(name)"; </tag></item>
+      <item> forward <tag> out.Name=".forward"; </tag></item>
+      <item> up <tag> out.Name=".up"; </tag></item>
+      <item> right <tag> out.Name=".right"; </tag></item>
+      <item> layer <tag> out.Name=".layer"; </tag></item>
+      <item> scene <tag> out.Name=".scene"; </tag></item>
+      <item> activeSelf <tag> out.Name=".activeSelf"; </tag></item>
+      <item> equals <tag> out.Name=".Equals(Other)"; </tag></item>
+      <item> count <tag> out.Name=".Count"; </tag></item>
+      <item> first <tag> out.Name=".First(Item)"; </tag></item>
+      <item> last <tag> out.Name=".Last(Item)"; </tag></item>
+      <item> add <tag> out.Name=".Add(Item)"; </tag></item>
+      <item> remove <tag> out.Name=".Remove(Item)"; </tag></item>
+      <item> remove at <tag> out.Name=".RemoveAt(Index)"; </tag></item>
+      <item> index of <tag> out.Name=".IndexOf(Item)"; </tag></item>
+      <item> contains <tag> out.Name=".Contains(Item)"; </tag></item>
+      <item> set active <tag> out.Name=".SetActive(active)"; </tag></item>
+      <item> get component in parent <tag> out.Name=".GetComponentInParent&lt;T>()"; </tag></item>
+      <item> get component in children <tag> out.Name=".GetComponentInChildren&lt;T>()"; </tag></item>
+      <item> get component <tag> out.Name=".GetComponent&lt;T>()"; </tag></item>
+      <item> add component <tag> out.Name=".AddComponent&lt;T>()"; </tag></item>
+      <item> get instance ID <tag> out.Name=".GetInstanceID7()"; </tag></item>
+    </one-of>
+    </item>
+    </rule>
+    
+    
+    
+   <rule id="encaselist" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+      <item> perenthesis <tag> out.Name="perenthesis"; </tag></item>
+      <item> bracket <tag> out.Name="bracket"; </tag></item>
+      <item> brace <tag> out.Name="brace"; </tag></item>
+      <item> double quote <tag> out.Name="double quote"; </tag></item>
+      <item> single quote <tag> out.Name="single quote"; </tag></item>
+    </one-of>
+    </item>
+    </rule>
+
+
+	 
+   <rule id="CSdeftypes" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+      
+      <item> variable <tag> out.ActionType="variable"; </tag></item>
+      <item> camel variable <tag> out.ActionType="camel variable"; </tag></item>
+      <item> dot variable <tag> out.ActionType="dot variable"; </tag></item>
+      <item> dash variable <tag> out.ActionType="dash variable"; </tag></item>
+      <item> score variable <tag> out.ActionType="score variable"; </tag></item>
+      
+      <item> object <tag> out.ActionType="object"; </tag></item>
+      <item> camel object <tag> out.ActionType="camel object"; </tag></item>
+      <item> score object <tag> out.ActionType="score object"; </tag></item>
+      
+      <item> string <tag> out.ActionType="string"; </tag></item>
+      <item> camel string <tag> out.ActionType="camel string"; </tag></item>
+      <item> score string <tag> out.ActionType="score string"; </tag></item>
+      
+      <item> class <tag> out.ActionType="class"; </tag></item>
+      <item> camel class <tag> out.ActionType="camel class"; </tag></item>
+      <item> score class <tag> out.ActionType="score class"; </tag></item>
+      
+      <item> int <tag> out.ActionType="int"; </tag></item>
+      <item> camel int <tag> out.ActionType="camel int"; </tag></item>
+      <item> score int <tag> out.ActionType="score int"; </tag></item>
+      
+      <item> integer <tag> out.ActionType="int"; </tag></item>
+      <item> camel integer <tag> out.ActionType="camel int"; </tag></item>
+      <item> score integer <tag> out.ActionType="score int"; </tag></item>
+      
+      <item> bool <tag> out.ActionType="bool"; </tag></item>
+      <item> camel bool <tag> out.ActionType="camel bool"; </tag></item>
+      <item> score bool <tag> out.ActionType="score bool"; </tag></item>
+      
+      <item> boolean <tag> out.ActionType="bool"; </tag></item>
+      <item> camel boolean <tag> out.ActionType="camel bool"; </tag></item>
+      <item> score boolean <tag> out.ActionType="score bool"; </tag></item>
+      
+      <item> new list <tag> out.ActionType="new list"; </tag></item>
+      <item> new camel list <tag> out.ActionType="new camel list"; </tag></item>
+      <item> new score list <tag> out.ActionType="new score list"; </tag></item>
+      
+      <item> list <tag> out.ActionType="list"; </tag></item>
+      <item> camel list <tag> out.ActionType="camel list"; </tag></item>
+      <item> score list <tag> out.ActionType="score list"; </tag></item>
+      
+      <item> enumeration <tag> out.ActionType="enum"; </tag></item>
+      <item> camel enumeration <tag> out.ActionType="camel enum"; </tag></item>
+      <item> score enumeration <tag> out.ActionType="score enum"; </tag></item>
+      
+      <item> vector 2 <tag> out.ActionType="vector2"; </tag></item>
+      <item> camel vector 2 <tag> out.ActionType="camel vector2"; </tag></item>
+      <item> score vector 2 <tag> out.ActionType="score vector2"; </tag></item>
+      
+      <item> vector 3 <tag> out.ActionType="vector3"; </tag></item>
+      <item> camel vector 3 <tag> out.ActionType="camel vector3"; </tag></item>
+      <item> score vector 3 <tag> out.ActionType="score vector3"; </tag></item>
+      
+      <item> new vector 2 <tag> out.ActionType="new vector2"; </tag></item>
+      <item> new camel vector 2 <tag> out.ActionType="new camel vector2"; </tag></item>
+      <item> new score vector 2 <tag> out.ActionType="new score vector2"; </tag></item>
+      
+      <item> new vector 3 <tag> out.ActionType="new vector3"; </tag></item>
+      <item> new camel vector 3 <tag> out.ActionType="new camel vector3"; </tag></item>
+      <item> new score vector 3 <tag> out.ActionType="new score vector3"; </tag></item>
+      
+      <item> void <tag> out.ActionType="void"; </tag></item>
+      <item> camel void <tag> out.ActionType="camel void"; </tag></item>
+      <item> score void <tag> out.ActionType="score void"; </tag></item>
+      
+      
+      <item> function <tag> out.ActionType="void"; </tag></item>
+      <item> camel function <tag> out.ActionType="camel void"; </tag></item>
+      <item> score function <tag> out.ActionType="score void"; </tag></item>
+      
+      
+      <item> float <tag> out.ActionType="float"; </tag></item>
+      <item> camel float <tag> out.ActionType="camel float"; </tag></item>
+      <item> score float <tag> out.ActionType="score float"; </tag></item>
+      
+      <item> transform <tag> out.ActionType="transform"; </tag></item>
+      <item> camel transform <tag> out.ActionType="camel transform"; </tag></item>
+      <item> score transform <tag> out.ActionType="score transform"; </tag></item>
+      
+      
+      <item> game object <tag> out.ActionType="game object"; </tag></item>
+      <item> camel game object <tag> out.ActionType="camel game object"; </tag></item>
+      <item> score game object <tag> out.ActionType="score game object"; </tag></item>
+      
+      
+      
+    </one-of>
+    </item>
+    </rule>
+	 
+   <rule id="deftypes" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+      <item> variable <tag> out.ActionType="variable"; </tag></item>
+      <item> camel variable <tag> out.ActionType="camel variable"; </tag></item>
+      <item> dot variable <tag> out.ActionType="dot variable"; </tag></item>
+      <item> dash variable <tag> out.ActionType="dash variable"; </tag></item>
+      <item> score variable <tag> out.ActionType="score variable"; </tag></item>
+      <item> camel function <tag> out.ActionType="camel function"; </tag></item>
+      <item> dot function <tag> out.ActionType="dot function"; </tag></item>
+      <item> dash function <tag> out.ActionType="dash function"; </tag></item>
+      <item> score function <tag> out.ActionType="score function"; </tag></item>
+      <item> function <tag> out.ActionType="function"; </tag></item>
+    </one-of>
+    </item>
+    </rule>
+
+
+	 
+   <rule id="dictationLib" sapi:dynamic="true">
+    <tag> out=""; </tag> 
+   <item repeat="0-20"> 
+        <one-of>
+      <item> space <tag> out=out+" "</tag></item>
+      <item> new line <tag> out=out+"\n"</tag></item>
+      <item> bar symbol <tag> out=out+"|"</tag></item>
+      <item> one <tag> out=out+"1"</tag></item>
+      <item> two <tag> out=out+"2"</tag></item>
+      <item> three <tag> out=out+"3"</tag></item>
+      <item> four <tag> out=out+"4"</tag></item>
+      <item> five <tag> out=out+"5"</tag></item>
+      <item> six <tag> out=out+"6"</tag></item>
+      <item> seven <tag> out=out+"7"</tag></item>
+      <item> eight <tag> out=out+"8"</tag></item>
+      <item> nine <tag> out=out+"9"</tag></item>
+      <item> ten <tag> out=out+"10"</tag></item>
+      
+     <item> tick mark <tag> out=out+"`"</tag></item>
+      <item> back tick <tag> out=out+"`"</tag></item>
+      <item> double quote <tag> out=out+"\""</tag></item>
+      <item> single quote <tag> out=out+"'"</tag></item>
+      <item> back slash <tag> out=out+"\\"</tag></item>
+      <item> forward slash <tag> out=out+"/"</tag></item>
+      
+            <item> greater than <tag> out="&gt;"</tag></item>
+      <item> less than <tag> out="&lt;"</tag></item>
+      <item> and <tag> out="&amp;"</tag></item>
+      <item> amp <tag> out="&amp;"</tag></item>
+      
+      <item> hash tag <tag> out=out+"#"</tag></item>
+      <item> pound <tag> out=out+"#"</tag></item>
+      <item> tilde <tag> out=out+"~"</tag></item>
+      <item> carrot <tag> out=out+"^"</tag></item>
+      <item> star <tag> out=out+"*"</tag></item>
+      <item> percent sign <tag> out=out+"%"</tag></item>
+      <item> percent <tag> out=out+"%"</tag></item>
+      <item> dollar sign <tag>out=out+"$"</tag></item>
+      <item> period <tag> out=out+"."</tag></item>
+      <item> comma <tag> out=out+","</tag></item>
+      <item> semy colon <tag> out=out+";"</tag></item>
+      <item> sem eye colon <tag> out=out+";"</tag></item>
+      <item> colon <tag> out=out+":"</tag></item>
+      <item> question mark <tag> out=out+"?"</tag></item>
+      <item> bang <tag> out=out+"!"</tag></item>
+      <item> exclamation mark <tag> out=out+"!"</tag></item>
+      <item> left perenthesis <tag> out=out+"("</tag></item>
+      <item> right perenthesis <tag> out=out+")"</tag></item>
+      <item> left brace <tag> out=out+"{"</tag></item>
+      <item> right brace <tag> out=out+"}"</tag></item>
+      <item> left bracket <tag> out=out+"["</tag></item>
+      <item> right bracket <tag> out=out+"]"</tag></item>
+      <item> under score <tag> out=out+"_"</tag></item>
+      <item> dash <tag> out=out+"-"</tag></item>
+      <item> not equal <tag> out=out+"!="</tag></item>
+      <item> equal <tag> out=out+"="</tag></item>
+      <item> minus <tag> out=out+"-"</tag></item>
+      <item> plus <tag> out=out+"+"</tag></item>
+      <item> at <tag> out=out+"@"</tag></item>
+      <item> at sign <tag> out=out+"@"</tag></item>
+      <item> dot com <tag> out=out+".com"</tag></item>
+      <item> w w w dot <tag> out=out+"www."</tag></item>
+      
+      <item> a <tag> out=out+"a"</tag></item>
+      <item> b <tag> out=out+"b"</tag></item>
+      <item> c <tag> out=out+"c"</tag></item>
+      <item> d <tag> out=out+"d"</tag></item>
+      <item> e <tag>out=out+"e"</tag></item>
+      <item> f <tag> out=out+"f"</tag></item>
+      <item> g <tag> out=out+"g"</tag></item>
+      <item> h <tag>out=out+"h"</tag></item>
+      <item> i <tag> out=out+"i"</tag></item>
+      <item> j <tag> out=out+"j"</tag></item>
+      <item> k <tag> out=out+"k"</tag></item>
+      <item> l <tag>out=out+"l"</tag></item>
+      <item> m <tag> out=out+"m"</tag></item>
+      <item> n <tag> out=out+"n"</tag></item>
+      <item> o <tag> out=out+"o"</tag></item>
+      <item> p <tag>out=out+"p"</tag></item>
+      <item> q <tag> out=out+"q"</tag></item>
+      <item> r <tag> out=out+"r"</tag></item>
+      <item> s <tag> out=out+"s"</tag></item>
+      <item> t <tag> out=out+"t"</tag></item>
+      <item> u <tag> out=out+"u"</tag></item>
+      <item> v <tag> out=out+"v"</tag></item>
+      <item> w <tag> out=out+"w"</tag></item>
+      <item> x <tag> out=out+"x"</tag></item>
+      <item> y <tag> out=out+"y"</tag></item>
+      <item> z <tag> out=out+"z"</tag></item>
+      
+      
+      
+      <item> adam <tag> out=out+"a"</tag></item>
+      
+      <item> brian <tag> out=out+"b"</tag></item>
+      <item> catherine <tag> out=out+"c"</tag></item>
+      <item> dana <tag> out=out+"d"</tag></item>
+      
+      
+      <item> evan <tag>out=out+"e"</tag></item>
+      <item> ethan <tag>out=out+"e"</tag></item>
+      <item> earl <tag>out=out+"e"</tag></item>
+      
+      <item> frank<tag> out=out+"f"</tag></item>
+      <item> francine<tag> out=out+"f"</tag></item>
+      
+      <item> george <tag> out=out+"g"</tag></item>
+      
+      
+      <item> harry <tag>out=out+"h"</tag></item>
+      <item> hank <tag>out=out+"h"</tag></item>
+      <item> hanna <tag>out=out+"h"</tag></item>
+      <item> heather <tag>out=out+"h"</tag></item>
+      
+      <item> iguana <tag>out=out+"i"</tag></item>
+      <item> igloo <tag>out=out+"i"</tag></item>
+      
+      <item> peter <tag>out=out+"p"</tag></item>
+      <item> parker <tag>out=out+"p"</tag></item>
+      <item> penelope <tag>out=out+"p"</tag></item>
+      
+      
+      <item> jessie <tag> out=out+"j"</tag></item>
+      <item> josh <tag> out=out+"j"</tag></item>
+      <item> jenny <tag> out=out+"j"</tag></item>
+      <item> joana <tag> out=out+"j"</tag></item>
+      <item> john <tag> out=out+"j"</tag></item>
+      
+      <item> katie <tag> out=out+"k"</tag></item>
+      <item> kyle <tag> out=out+"k"</tag></item>
+      <item> kayden <tag> out=out+"k"</tag></item>
+      <item> kayla <tag> out=out+"k"</tag></item>
+      
+      <item> loren <tag>out=out+"l"</tag></item>
+      <item> leon <tag>out=out+"l"</tag></item>
+      <item> lenny <tag>out=out+"l"</tag></item>
+      <item> larry <tag>out=out+"l"</tag></item>
+      
+      
+      <item> martin <tag> out=out+"m"</tag></item>
+      <item> mark <tag> out=out+"m"</tag></item>
+      <item> megan <tag> out=out+"m"</tag></item>
+      
+      <item> nick <tag> out=out+"n"</tag></item>
+      <item> nancy <tag> out=out+"n"</tag></item>
+      <item> nichole <tag> out=out+"n"</tag></item>
+      
+      
+      <item> samantha <tag> out=out+"s"</tag></item>
+      <item> sam <tag> out=out+"s"</tag></item>
+      <item> stan <tag> out=out+"s"</tag></item>
+      <item> shawn <tag> out=out+"s"</tag></item>
+      <item> stanley <tag> out=out+"s"</tag></item>
+      <item> sarah <tag> out=out+"s"</tag></item>
+      
+      
+      <item> thomas <tag> out=out+"t"</tag></item>
+      <item> timmy <tag> out=out+"t"</tag></item>
+      <item> tyler <tag> out=out+"t"</tag></item>
+      <item> tanya <tag> out=out+"t"</tag></item>
+      <item> tanner <tag> out=out+"t"</tag></item>
+      
+    </one-of>
+    </item>
+    </rule>
+
+
+	 
+   <rule id="repeatCount" sapi:dynamic="true">
+   
+   <item repeat="0-1"> 
+        <one-of>
+      <item> one </item>
+      <item> two </item>
+      <item> three </item>
+      <item> four </item>
+      <item> five </item>
+      <item> six </item>
+      <item> seven </item>
+      <item> eight </item>
+      <item> nine </item>
+      <item> ten </item>
+    </one-of>
+    </item>
+    </rule>
+
+
+   <rule id="wordlib" sapi:dynamic="true">
+   
+   <item repeat="0-3"> 
+        <one-of>
+      	<item> phone </item>
+      <item> email </item>
+      <item> address </item>
+      <item> email address </item>
+      <item> city </item>
+      <item> state </item>
+      <item> country </item>
+      <item> content </item>
+      <item> data </item>
+      <item> input </item>
+      <item> awake </item>
+      <item> awoke </item>
+      <item> send </item>
+      <item> airport </item>
+      <item> hotel </item>
+      <item> hospital </item>
+      <item> casino </item>
+      <item> bank </item>
+      <item> check </item>
+      <item> card </item>
+      <item> credit </item>
+      <item> reciept </item>
+      <item> yearly </item>
+      <item> dayly </item>
+      <item> hourly </item>
+      <item> salary </item>
+      <item> career </item>
+      <item> job </item>
+      <item> opening </item>
+      <item> contact </item>
+      <item> recieve </item>
+      <item> message </item>
+      <item> notifications </item>
+      <item> notification </item>
+      <item> notify </item>
+      <item> settings </item>
+      <item> loop </item>
+      <item> static </item>
+      <item> dynamic </item>
+      <item> future </item>
+      <item> past </item>
+      <item> current </item>
+      <item> old </item>
+      <item> new </item>
+      <item> beat </item>
+      <item> bet </item>
+      <item> buy </item>
+      <item> bid </item>
+      <item> offer </item>
+      <item> sell </item>
+      <item> give </item>
+      <item> bought </item>
+      <item> brought </item>
+      <item> build </item>
+      <item> built </item>
+      <item> burn </item>
+      <item> burned </item>
+      <item> turn </item>
+      <item> turned </item>
+      <item> rotate </item>
+      <item> rotated </item>
+      <item> degrees </item>
+      <item> percent </item>
+      <item> half </item>
+      <item> quarter </item>
+      <item> empty </item>
+      <item> none </item>
+      <item> full </item>
+      <item> filled </item>
+      <item> ready </item>
+      <item> already </item>
+      <item> gain </item>
+      <item> again </item>
+      <item> once </item>
+      <item> twice </item>
+      <item> devide </item>
+      <item> multiply </item>
+      <item> add </item>
+      <item> subtract </item>
+      <item> average </item>
+      <item> round </item>
+      <item> circumference </item>
+      <item> radius </item>
+      <item> diameter </item>
+      <item> circle </item>
+      <item> square </item>
+      <item> triangle </item>
+      <item> polygon </item>
+      <item> hexagon </item>
+      <item> octagon </item>
+      <item> rectangle </item>
+      <item> cube </item>
+      <item> shape </item>
+      <item> shapes </item>
+      <item> addon </item>
+      <item> addons </item>
+      <item> module </item>
+      <item> modules </item>
+      <item> store </item>
+      <item> stores </item>
+      <item> shop </item>
+      <item> shops </item>
+      <item> map </item>
+      <item> maps </item>
+      <item> arrow </item>
+      <item> arrows </item>
+      <item> menu </item>
+      <item> menus </item>
+      <item> color </item>
+      <item> colors </item>
+      <item> direction </item>
+      <item> directions </item>
+      <item> size </item>
+      <item> sizes </item>
+      <item> scale </item>
+      <item> speed </item>
+      <item> frame </item>
+      <item> debug </item>
+      <item> array </item>
+      <item> object </item>
+      <item> cart </item>
+      <item> checkout </item>
+      <item> shopping </item>
+      <item> class </item>
+      <item> script </item>
+      <item> scripts </item>
+      <item> tab </item>
+      <item> tabs </item>
+      <item> monitor </item>
+      <item> lonitors </item>
+      <item> lock </item>
+      <item> locks </item>
+      <item> login </item>
+      <item> logout </item>
+      <item> say </item>
+      <item> think </item>
+      <item> hope </item>
+      <item> feel </item>
+      <item> want </item>
+      <item> submit </item>
+      <item> click </item>
+      <item> left </item>
+      <item> right </item>
+      <item> top </item>
+      <item> bottom </item>
+      <item> center </item>
+      <item> middle </item>
+      <item> front </item>
+      <item> back </item>
+      <item> print </item>
+      <item> render </item>
+      <item> display </item>
+      <item> replace </item>
+      <item> replacements </item>
+      <item> format </item>
+      <item> formats </item>
+      <item> reformat </item>
+      <item> unformatted </item>
+      <item> reformatted </item>
+      <item> with </item>
+      <item> without </item>
+      <item> outside </item>
+      <item> inside </item>
+      <item> duplicate </item>
+      <item> duplicates </item>
+      <item> clone </item>
+      <item> clones </item>      
+      <item> become </item>
+      <item> became </item>
+      <item> began </item>
+      <item> begin </item>
+      <item> page </item>
+      <item> pages </item>
+      <item> button </item>
+      <item> buttons </item>
+      <item> test </item>
+      <item> temp </item>
+      <item> type </item>
+      <item> types </item>
+      <item> file </item>
+      <item> files </item>
+      <item> request </item>
+      <item> requests </item>
+      <item> response </item>
+      <item> responses </item>
+      <item> URL </item>
+      <item> PHP </item>
+      <item> name </item>
+      <item> names </item>      
+      <item> output </item>
+      <item> container </item>
+      <item> containers </item>
+      <item> connection </item>
+      <item> connections </item>
+      <item> info </item>
+      <item> information </item>
+      <item> volume </item>
+      <item> handle </item>
+      <item> handler </item>
+      <item> handlers </item>
+      <item> mouse </item>      
+      <item> keyboard </item>
+      <item> keyboards </item>
+      <item> disk </item>
+      <item> disks </item>
+      <item> wemsite </item>
+      <item> wemsites </item>
+      <item> database </item>
+      <item> databases </item>
+      <item> template </item>
+      <item> tem,plates </item>
+      <item> link </item>
+      <item> links </item>
+      <item> image </item>
+      <item> images </item>
+      <item> video </item>
+      <item> videos </item>
+      <item> table </item>
+      <item> tables </item>
+      <item> row </item>
+      <item> rows </item>
+      <item> column </item>
+      <item> columns </item>
+      <item> select </item>
+      <item> selects </item>
+      <item> key </item>
+      <item> keys </item>
+      <item> value </item>
+      <item> values </item>      
+      <item> variable </item>
+      <item> variables </item>
+      <item> function </item>
+      <item> functions </item>
+      <item> protected </item>
+      <item> protection </item>
+      <item> secure </item>
+      <item> security </item>
+      <item> program </item>
+      <item> programs </item>
+      <item> folder </item>
+      <item> folders </item>
+      <item> directory </item>
+      <item> directories </item>
+      <item> play </item>
+      <item> pause </item>
+      <item> stop </item>
+      <item> start </item>
+      <item> sleep </item>
+      <item> sleeps </item>
+      <item> windows </item>
+      <item> window </item>
+      <item> door </item>
+      <item> doors </item>
+      <item> mac </item>
+      <item> apple </item>
+      <item> linux </item>
+      <item> unix </item>
+      <item> epoch </item>
+      <item> timestamp </item>
+      <item> hash </item>
+      <item> CRC </item>
+      <item> salt </item>
+      <item> insert </item>
+      <item> update </item>
+      <item> delete </item>
+      <item> fetch </item>
+      <item> get </item>
+      <item> put </item>
+      <item> post </item>
+      <item> method </item>
+      <item> where </item>
+      <item> into </item>
+      <item> from </item>
+      <item> to </item>
+      <item> admin </item>
+      <item> edit </item>
+      <item> add </item>
+      <item> create </item>
+      <item> remove </item>
+      <item> copy </item>
+      <item> paste </item>
+      <item> wrapper </item>
+      <item> wrappers </item>
+      <item> user </item>
+      <item> users </item>
+      <item> username </item>
+      <item> usernames </item>
+      <item> password </item>
+      <item> passwords </item>
+      <item> account </item>
+      <item> acounts </item>
+      <item> car </item>
+      <item> cars </item>
+      <item> truck </item>
+      <item> trucks </item>
+      <item> condition </item>
+      <item> conditions </item>
+      <item> action </item>
+      <item> actions </item>
+      <item> last </item>
+      <item> next </item>
+      <item> start </item>
+      <item> end </item>
+      <item> score </item>
+      <item> scores </item>
+      <item> count </item>
+      <item> counts </item>
+      <item> min </item>
+      <item> max </item>
+      <item> minimum </item>
+      <item> maximum </item>
+      <item> date </item>
+      <item> dates </item>
+      <item> time </item>
+      <item> day </item>
+      <item> days </item>
+      <item> month </item>
+      <item> months </item>
+      <item> year </item>
+      <item> years </item>
+      <item> start date </item>
+      <item> end date </item>
+      <item> start year </item>
+      <item> end year </item>
+      <item> start month </item>
+      <item> end month </item>
+      <item> start day </item>
+      <item> end day </item>
+      <item> hello </item>
+      <item> goodbye </item>
+      <item> world </item>
+      <item> earth </item>
+      <item> planet </item>
+      <item> galaxy </item>
+      <item> universe </item>
+      <item> validate </item>
+      <item> authenticate </item>
+      <item> API </item>
+      <item> selection </item>
+      <item> terminate </item>
+      <item> return </item>
+      <item> font </item>
+      <item> code </item>
+      <item> checksum </item>
+      <item> verify </item>
+      <item> backup </item>
+      <item> source </item>
+      <item> protocol </item>
+      <item> security </item>
+      <item> secure </item>
+      <item> mail </item>
+      <item> read </item>
+      <item> write </item>
+      <item> reply </item>
+      <item> incorrect </item>
+      <item> correct </item>
+      <item> parse </item>
+      <item> email </item>
+      <item> zip </item>
+      <item> zipcode </item>
+      <item> form </item>
+      <item> submit </item>
+      <item> button </item>
+      <item> refresh </item>
+      <item> resend </item>
+      <item> reset </item>
+      <item> forgot </item>
+      <item> password </item>
+      <item> user </item>
+      <item> name </item>
+      <item> username </item>
+      <item> encode </item>
+      <item> deencode </item>
+      <item> encrypt </item>
+      <item> decrypt </item>
+      <item> compress </item>
+      <item> decompress </item>
+      <item> salt </item>
+      <item> pair </item>
+      <item> reduce </item>
+      <item> increase </item>
+      <item> consolidate </item>
+      <item> disperse </item>
+      <item> condense </item>
+      <item> expand </item>
+      <item> transaction </item>
+      <item> transmit </item>
+      <item> reveal </item>
+      <item> show </item>
+      <item> hide </item>
+      <item> location </item>
+      <item> locate </item>
+      <item> destination </item>
+      <item> find </item>
+      <item> replace </item>
+      <item> search </item>
+      <item> remove </item>
+      <item> online </item>
+      <item> offline </item>
+      <item> pause </item>
+      <item> play </item>
+      <item> start </item>
+      <item> stop </item>
+      <item> home </item>
+      <item> finish </item>
+      <item> color </item>
+      <item> size </item>
+      <item> length </item>
+      <item> height </item>
+      <item> width </item>
+      <item> text </item>
+      <item> frame </item>
+      <item> element </item>
+      <item> stream </item>
+      <item> project </item>
+      <item> preview </item>
+      <item> document </item>
+      <item> part </item>
+      <item> template </item>
+      <item> loop </item>
+      <item> switch </item>
+      <item> include </item>
+      <item> require </item>
+    </one-of>
+    
+    </item>
+    </rule>
+	 
+</grammar>
